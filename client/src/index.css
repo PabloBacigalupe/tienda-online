@@ -2,15 +2,12 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -22,10 +19,37 @@ a:hover {
   color: #535bf2;
 }
 
+.navbar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: #1a1a1a;
+  padding: 1rem 0;
+}
+
+.navbar-list {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-list li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: color 0.3s;
+}
+
+.navbar-list li a:hover {
+  color: #646cff;
+}
+
+
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -52,6 +76,63 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.product-card {
+  background-color: #d3d8de;
+  border-radius: 2rem;
+  padding: 1rem;
+  width: 100%;
+  max-width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 1rem;
+}
+
+.product-image img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 1.5rem;
+}
+
+.product-info {
+  text-align: left;
+}
+
+.product-info h3 {
+  font-size: 1.2rem;
+  margin: 0.5rem 0 0;
+}
+
+.product-info .company {
+  font-size: 0.9rem;
+  color: gray;
+}
+
+.product-info .description {
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
+
+.product-info .category {
+  font-size: 0.9rem;
+  color: gray;
+}
+
+.product-info .price {
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: right;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  justify-items: center;
+  padding: 2rem;
+  gap: 50px;
 }
 
 @media (prefers-color-scheme: light) {

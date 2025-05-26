@@ -58,9 +58,9 @@ const ProductFilter = () => {
   return (
     <Fragment>
       <div>
-        <h1 className='text-sm text-center leading-relaxed m-3'>
+        {/* <h1 className='text-sm text-center leading-relaxed m-3'>
           Search by title, company or description
-        </h1>
+        </h1> */}
         <div className='dropdown dropdown-hover'>
           <label tabIndex='0' className='btn-xs btn-secondary btn m-1'>
             Sort
