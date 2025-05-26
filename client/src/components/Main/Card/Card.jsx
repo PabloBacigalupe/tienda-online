@@ -1,5 +1,5 @@
-// src/components/Main/Card.jsx
 import React from 'react';
+import ProductModal from '../ProductModal';
 
 const Card = ({ product }) => {
   const { title, company, description, category, price, image_url } = product;
@@ -15,6 +15,7 @@ const Card = ({ product }) => {
         <p className="description">{description.slice(0, 80)}...</p>
         <p className="category">{category}</p>
         <p className="price">{price}$</p>
+        <ProductModal productItem={product} />
       </div>
     </div>
   );

@@ -25,22 +25,19 @@ const AllProducts = () => {
 
   return (
     <>
-      <div className='flex justify-center mt-4'>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}>
+      <div className="search-container">
+        <form onSubmit={(e) => e.preventDefault()}>
           <input
-            type='text'
-            className='p-2 block bg-primary text-black placeholder-black placeholder-opacity-40 input input-bordered input-secondary w-full max-w-xs'
+            type="text"
+            className="search-input"
             value={inputText}
-            placeholder='Search Products'
+            placeholder="Search products..."
             onChange={onChange}
           />
         </form>
       </div>
 
-      <div className='cards-container'>
+      <div className="cards-container">
         {products !== null ? (
           filtered !== null ? (
             filtered.map((product) => (

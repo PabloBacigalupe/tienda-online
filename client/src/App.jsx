@@ -18,7 +18,7 @@ function App() {
         <ProductState>
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/all-products' element={<AllProducts />} />
+            {/* <Route path='/all-products' element={<AllProducts />} /> */}
             <Route path='/product-form' element={<ProductForm />} />
           </Routes>
           <Pagination />
