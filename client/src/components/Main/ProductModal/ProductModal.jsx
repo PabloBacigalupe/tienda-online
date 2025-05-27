@@ -43,10 +43,10 @@ const ProductModal = ({ productItem }) => {
             {provider && (
               <div className='box'>
                 <h3 className='sub'>Provider</h3>
-                <p className='txt'><b>Name:</b> {provider.name}</p>
-                <p className='txt'><b>Email:</b> {provider.email}</p>
-                <p className='txt'><b>Phone:</b> {provider.phone}</p>
-                <p className='txt'><b>Location:</b> {provider.location}</p>
+                <p className='txt'><b>Company</b> {provider.company}</p>
+                <p className='txt'><b>Cif:</b> {provider.cif}</p>
+                <p className='txt'><b>Adress:</b> {provider.adress}</p>
+                
               </div>
             )}
 
