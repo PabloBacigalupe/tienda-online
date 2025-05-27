@@ -1,7 +1,9 @@
 const morgan = require('morgan');
 const express = require('express'); 
 const cors = require('cors'); 
-const pool = require('../config/db_pgsql'); 
+const pool = require('./config/db_pgsql'); 
+
+const productsRoutes = require('./routes/products.routes');
 
 const app = express();
 const PORT = process.env.PORT || 3000; 
@@ -22,10 +24,10 @@ app.use((req, res, next) => {
 });
 
 // Rutas adaptadas
-const productRoutes = require('./routes/products');
+const productRoutes = require('./routes/products.routes');
 app.use('/api/products', productRoutes);
 
-const providerRoutes = require('./routes/providers');
+const providerRoutes = require('./routes/providers.routes');
 app.use('/api/providers', providerRoutes);
 
 // Ruta de prueba
