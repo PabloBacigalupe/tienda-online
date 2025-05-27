@@ -1,8 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 
-const entriesRoutes = require('./routes/entries.routes'); 
-const authorsRoutes = require('./routes/authors.routes');
+const providersRoutes = require('./routes/providers.routes'); 
+const productsRoutes = require('./routes/products.routes');
 
 const app = express();
 const PORT = 3000;
@@ -16,9 +16,8 @@ app.get('/', (req, res) => {
 });
 
 // Rutas principales
-app.use('/api/entries', entriesRoutes); 
-
-app.use('/api/authors', authorsRoutes);
+app.use('/api/providers', providersRoutes); 
+app.use('/api/products', productsRoutes);
 
 // Arrancar servidor
 app.listen(PORT, () => {

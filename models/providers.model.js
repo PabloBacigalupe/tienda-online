@@ -1,70 +1,81 @@
-const mongoose = require('mongoose');
-require('../config/db_mongo') // Conexión a BBDD MongoDB
 
+const pool = require('../config/db_pgsql'); 
+const queries = require('../queries/providers.queries'); 
 
-const objectSchema = {
-    companyName: { 
-        type: String, 
-        required: true,
-        unique: true 
-    },
-    website: {
-        type: String,
-        required: true,
-        validate: {
-            validator: function(url){
-                if(url.indexOf('http') != -1)
-                    return true;
-                else {
-                    return false;
-                }
-            }, 
-            message: "Porfa, introduce una URL válida"
-        }
-    },
-    image:{
-        type: String,
-        validate: {
-            validator: function(url){
-                if(url.indexOf('.jpg') != -1 || url.indexOf('.png') != -1)
-                    return true;
-                else {
-                    return false;
-                }
-            }, 
-            message: "Porfa, sólo imágenes JPG o PNG"
-        }
-    }
-}
+const getAllProviders = async () => {
+  let client, result;
+  try {
+    client = await pool.connect();
+    const data = await client.query(queries.getAllProviders);
+    result = data.rows;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  } finally {
+    client.release();
+  }
+  return result;
+};
 
-// Crear el esquema
-const providerSchema = mongoose.Schema(objectSchema);
-// Crear el modelo
-const Provider = mongoose.model('Provider', providerSchema);
+const insertProvider = async (entry) => {
+  let client, result;
+  try {
+    client = await pool.connect();
+    const data = await client.query(queries.insertProvider, [
+      entry.company,
+      entry.cif,
+      entry.adress
+    ]);
+    result = data.rowCount;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  } finally {
+    client.release();
+  }
+  return result;
+};
 
-module.exports = Provider;
+const updateProvider = async (entry) => {
+  let client, result;
+  try {
+    client = await pool.connect();
+    const data = await client.query(queries.updateProvider, [
+      entry.company,
+      entry.cif,
+      entry.adress,
+      entry.old_company
+    ]);
+    result = data.rowCount;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  } finally {
+    client.release();
+  }
+  return result;
+};
 
-/* 
-// Insertar un proveedor
-const p = new Provider({
-    companyName: "La casa de las flores",
-    website: "https://www.lacasadelasflores.com",
-    image:"https://www.lacasadelasflores.com/imagen.jpg"
-});
+const deleteProvider = async (entry) => {
+  let client, result;
+  try {
+    client = await pool.connect();
+    const data = await client.query(queries.deleteProvider, [entry.company]);
+    result = data.rowCount;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  } finally {
+    client.release();
+  }
+  return result;
+};
 
-// Guardar en la BBDD
-p.save()
-.then((data)=>console.log(data))
-.catch(err=>console.log(err))
+const providers = {
+  getAllProviders,
+  insertProvider,
+  updateProvider,
+  deleteProvider
+};
 
-// Insertar otro proveedor
-const p2 = new Provider({
-    companyName: "La casa de las plantas",
-    website: "https://www.lacasadelasplantas.com",
-    image:"https://www.lacasadelasplantas.com/imagen.jpg"
-});
-
-// Guardar en la BBDD
-p2.save()
-.then((data)=>console.log(data))
- */
+module.exports = providers;

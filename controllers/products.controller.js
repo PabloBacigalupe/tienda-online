@@ -1,46 +1,100 @@
-const Product = require("../models/products.model");
+const product = require("../models/products.model"); 
 
-// CREATE
-const createProduct = async (req, res) => {
-  console.log(req.body);
-
+const getAllProducts = async (req, res) => {
+  let products;
   try {
-    const data = req.body;
-    let answer = await new Product(data).save();
-    res.status(201).json(answer);
+    products = await product.getAllProducts();
+    res.status(200).json(products); 
   } catch (error) {
-    console.log(`ERROR: ${error.stack}`);
-    res.status(400).json({ msj: `ERROR: ${error.stack}` });
+    res.status(500).json({ error: "Error en la BBDD" });
   }
 };
 
-// READ
-const getProduct = async (req, res) => {
+const getCompany = async (req, res) => {
+  const companyToSearch = req.params.company;
   try {
-    const id = req.params.id;
-    let products = id
-      ? await Product.find({ id }, "-_id -__v").populate("provider", '-_id -__v')
-      : await Product.find({}, "-_id -__v").populate("provider", '-_id -__v'); //{}
-    res.status(200).json(products); // Respuesta de la API para 1 producto
+    const result = await product.getCompany({ company: companyToSearch });
+    if (result.length > 0) {
+      res.status(200).json(result[0]);
+    } else {
+      res.status(404).json({ message: "Compañía no encontrada" });
+    }
   } catch (error) {
-    console.log(`ERROR: ${error.stack}`);
-    res.status(400).json({ msj: `ERROR: ${error.stack}` });
+    console.error("Error al buscar la compañía:", error.message);
+    res.status(500).json({ error: "Error en la BBDD" });
   }
 };
 
-// UPATE
-const editProduct = (req, res) => {
-  res.status(200).send("Producto editado!");
+const deleteProduct = async (req, res) => {
+  const deleteProduct = req.body; // {title}
+  if ("title" in deleteProduct) {
+    try {
+      const response = await product.deleteProduct(deleteProduct);
+      res.status(200).json({
+        items_updated: response,
+        data: deleteProduct,
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Error en la BBDD" });
+    }
+  } else {
+    res.status(400).json({ error: "Faltan campos en la entrada" });
+  }
 };
 
-// DELETE
-const deleteProduct = (req, res) => {
-  res.status(200).send("Producto borrado!. Has borrado:" + req.params.id);
+const updateProduct = async (req, res) => {
+  const modifiedProduct = req.body; // {title, company, description, category, price, image_url, old_title}
+  if (
+    "title" in modifiedProduct &&
+    "company" in modifiedProduct &&
+    "description" in modifiedProduct &&
+    "category" in modifiedProduct &&
+    "price" in modifiedProduct &&
+    "image_url" in modifiedProduct &&
+    "old_title" in modifiedProduct
+  ) {
+    try {
+      const response = await product.updateProduct(modifiedProduct);
+      res.status(200).json({
+        items_updated: response,
+        data: modifiedProduct,
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Error en la BBDD" });
+    }
+  } else {
+    res.status(400).json({ error: "Faltan campos en la entrada" });
+  }
+};
+
+const insertProduct = async (req, res) => {
+  const newProduct = req.body; // {title, company, description, category, price, image_url}
+  if (
+    "title" in newProduct &&
+    "company" in newProduct &&
+    "description" in newProduct &&
+    "category" in newProduct &&
+    "price" in newProduct &&
+    "image_url" in newProduct
+  ) {
+    try {
+      const response = await product.insertProduct(newProduct);
+      res.status(200).json({
+        items_updated: response,
+        data: newProduct,
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Error en la BBDD" });
+    }
+  } else {
+    res.status(400).json({ error: "Faltan campos en la entrada" });
+  }
 };
 
 module.exports = {
-  createProduct,
-  getProduct,
-  editProduct,
+  getAllProducts,
+  getCompany,
   deleteProduct,
+  updateProduct,
+  insertProduct,
 };
