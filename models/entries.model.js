@@ -1,21 +1,7 @@
 const pool = require('../config/db_pgsql'); // conexión a la BBDD
-const queries = require("./queries"); // Queries SQL
+const queries = require("../queries"); // Queries SQL
 
-// GET
-const getEntriesByEmail = async (email) => {
-  let client, result;
-  try {
-    client = await pool.connect(); // Espera a abrir conexion
-    const data = await client.query(queries.getEntriesByEmail, [email]);
-    result = data.rows;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  } finally {
-    client.release();
-  }
-  return result;
-};
+
 
 // GET
 const getAllEntries = async () => {
