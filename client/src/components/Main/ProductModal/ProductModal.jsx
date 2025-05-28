@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import '../ProductModal/ProductModal.css';
 
 const ProductModal = ({ productItem }) => {
   const [show, setShow] = useState(false);
@@ -30,30 +31,36 @@ const ProductModal = ({ productItem }) => {
     <>
       <button className='btn' onClick={open}>Info</button>
 
-      {show && (
-        <div className='overlay'>
-          <div className='modal'>
-            <h2 className='title'>{title}</h2>
-            <img src={image_url} alt={title} className='img' />
-            <p className='txt'><b>Company:</b> {company}</p>
-            <p className='txt'><b>Description:</b> {description}</p>
-            <p className='txt'><b>Category:</b> {category}</p>
-            <p className='txt'><b>Price:</b> ${price}</p>
+          {show && (
+            <div className="overlay">
+              <div className="modal">
+                <button onClick={() => setShow(false)} className="close">✕</button>
 
-            {provider && (
-              <div className='box'>
-                <h3 className='sub'>Provider</h3>
-                <p className='txt'><b>Company</b> {provider.company}</p>
-                <p className='txt'><b>Cif:</b> {provider.cif}</p>
-                <p className='txt'><b>Adress:</b> {provider.adress}</p>
-                
+                <div className="modal-grid">
+                  <div className="modal-left">
+                    <img src={image_url} alt={title} className="modal-img" />
+                  </div>
+
+                  <div className="modal-right">
+                    <h2 className="modal-title">{title}</h2>
+                    <p className="modal-txt"><strong>Company:</strong> {company}</p>
+                    <p className="modal-txt"><strong>Description:</strong> {description}</p>
+                    <p className="modal-txt"><strong>Category:</strong> {category}</p>
+                    <p className="modal-txt"><strong>Price:</strong> ${price}</p>
+
+                    {provider && (
+                      <div className="modal-box">
+                        <h3 className="modal-sub">Provider</h3>
+                        <p className="modal-txt"><strong>Company:</strong> {provider.company}</p>
+                        <p className="modal-txt"><strong>CIF:</strong> {provider.cif}</p>
+                        <p className="modal-txt"><strong>Address:</strong> {provider.adress}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
-            )}
-
-            <button onClick={() => setShow(false)} className='close'>Close</button>
-          </div>
-        </div>
-      )}
+            </div>
+          )}
     </>
   );
 };

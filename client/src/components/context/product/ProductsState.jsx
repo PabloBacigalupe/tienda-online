@@ -67,18 +67,32 @@ export const addProduct = async (dispatch, product) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(product)
   };
+
   try {
     const response = await fetch('http://localhost:3000/api/products', options);
+
+    // Si la respuesta NO es exitosa, lanzar error
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Error al insertar en la base de datos');
+    }
+
     const data = await response.json();
+
+    // Solo se hace dispatch si el producto fue insertado correctamente
     dispatch({
       type: ADD_PRODUCT,
       payload: data
     });
+
+    return data;
   } catch (err) {
+    console.error('Error real al insertar producto:', err.message);
     dispatch({
       type: PRODUCT_ERROR,
-      payload: err.response?.msg || err.message
+      payload: err.message
     });
+    throw err;
   }
 };
 

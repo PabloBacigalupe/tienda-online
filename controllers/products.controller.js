@@ -6,6 +6,7 @@ const getAllProducts = async (req, res) => {
     products = await product.getAllProducts();
     res.status(200).json(products); 
   } catch (error) {
+    
     res.status(500).json({ error: "Error en la BBDD" });
   }
 };
@@ -68,7 +69,7 @@ const updateProduct = async (req, res) => {
 };
 
 const insertProduct = async (req, res) => {
-  const newProduct = req.body; // {title, company, description, category, price, image_url}
+  const newProduct = req.body; 
   if (
     "title" in newProduct &&
     "company" in newProduct &&
