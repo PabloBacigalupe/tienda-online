@@ -2,15 +2,15 @@ import React from 'react';
 import Modal from '../Modal';
 import { toast } from 'react-toastify';
 import { deleteProduct, useProducts } from '../../context/product/ProductsState';
-import '../ProductsDetails';
+import '../ProductsDetails/ProductsDetails.css';
 
 const ProductDetails = ({ productItem }) => {
   const productDispatch = useProducts()[1];
-  const { _id, title, company, description, category, price, image_url } = productItem;
+  const { id_product, title, company, description, category, price, image_url } = productItem;
 
   const onDelete = () => {
     toast.error('Product Deleted');
-    deleteProduct(productDispatch, _id);
+    deleteProduct(productDispatch, id_product);
   };
   
   return (
@@ -37,6 +37,9 @@ const ProductDetails = ({ productItem }) => {
           <button className="delete-btn" onClick={onDelete}>
             Delete
           </button>
+
+
+
         </div>
       </div>
     </div>
