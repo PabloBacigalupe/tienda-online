@@ -1,48 +1,48 @@
 import React from 'react';
-import { toast } from 'react-toastify';
 import Modal from '../Modal';
+import { toast } from 'react-toastify';
 import { deleteProduct, useProducts } from '../../context/product/ProductsState';
+import '../ProductsDetails/ProductsDetails.css';
 
 const ProductDetails = ({ productItem }) => {
-  // Only need the dispatch not the state
   const productDispatch = useProducts()[1];
-
-  const { _id, title, company, description, category, price, image_url } = productItem;
+  const { id_product, title, company, description, category, price, image_url } = productItem;
 
   const onDelete = () => {
     toast.error('Product Deleted');
-    deleteProduct(productDispatch, _id);
+    deleteProduct(productDispatch, id_product);
   };
-
+  
   return (
-    <>
-      {/* // Not matched cards per page */}
-      <div className='card card-compact bg-secondary shadow-xl my-3 sm:m-4'>
-        {/* Imagen del producto */}
-        {image_url && (
-          <figure>
-            <img src={image_url} alt={title} className='w-full h-48 object-cover' />
-          </figure>
-        )}
+    
+    <div className="product-card">
+      <button className="close-btn">cerrar</button>
 
-        <div className='card-body'>
-          <h2 className='card-title'>{title}</h2>
-          <p className='font-bold'>{company}</p>
-          <p className='text-sm'>{description}</p>
-          <p className='text-xs'>{`Category: ${category}`}</p>
-          <p className='text-sm font-semibold'>{`Price: $${price}`}</p>
+      <div className="image-container">
+        <img src={image_url} alt={title} className="product-image" />
+      </div>
 
-          <div className='card-actions justify-end'>
-            <div className='btn-group justify-between'>
-              <Modal productItem={productItem} />
-              <button className='btn btn-xs m-1 btn-primary' onClick={onDelete}>
-                Delete
-              </button>
-            </div>
-          </div>
+      <div className="product-info">
+        <h3 className="title">{title}</h3>
+        <p className="company">{company}</p>
+        <p className="description">
+          {description.length > 80 ? description.slice(0, 80) + '...' : description}
+        </p>
+        <p className="category">{`Category: ${category}`}</p>
+        <p className="company-name">{`Company: ${company}`}</p>
+
+        <div className="actions">
+          <Modal productItem={productItem} />
+          <p className="price">{price}$</p>
+          <button className="delete-btn" onClick={onDelete}>
+            Delete
+          </button>
+
+
+
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

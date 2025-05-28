@@ -5,7 +5,7 @@ import {
   filterProducts,
   clearFilter
 } from '../../context/product/ProductsState';
-import ProductsDetails from '../ProductsDetails';
+import Card from '../Card';
 
 const AllProducts = () => {
   const [productState, productDispatch] = useProducts();
@@ -25,40 +25,29 @@ const AllProducts = () => {
 
   return (
     <>
-      <div className='flex justify-center mt-4'>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}>
+      <div className="search-container">
+        <form onSubmit={(e) => e.preventDefault()}>
           <input
-            type='text'
-            className='p-2 block bg-primary text-black placeholder-black placeholder-opacity-40 input input-bordered input-secondary w-full max-w-xs'
+            type="text"
+            className="search-input"
             value={inputText}
-            placeholder='Search Products'
+            placeholder="Search products..."
             onChange={onChange}
           />
         </form>
       </div>
-      <div className='flex flex-col items-center justify-center m-3 sm:flex-wrap sm:flex-row '>
+
+      <div className="cards-container">
         {products !== null ? (
           filtered !== null ? (
-            <>
-              {filtered.map((productItem) => (
-                <div key={productItem._id}>
-                  <ProductsDetails productItem={productItem} />
-                </div>
-              ))}
-            </>
+            filtered.map((product) => (
+              <Card key={product._id} product={product} />
+            ))
           ) : (
-            <>
-              {productsPerPage !== null &&
-                productsPerPage.map((productItem) => (
-                  <ProductsDetails
-                    key={productItem._id}
-                    productItem={productItem}
-                  />
-                ))}
-            </>
+            productsPerPage !== null &&
+            productsPerPage.map((product) => (
+              <Card key={product._id} product={product} />
+            ))
           )
         ) : (
           <Spinner />
