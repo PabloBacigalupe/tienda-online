@@ -33,13 +33,15 @@ const productsReducer = (state, action) => {
           item._id === action.payload._id ? action.payload : item
         )
       };
-    case DELETE_PRODUCT:
-      return {
-        ...state,
-        products: state.products.filter(
-          (productItem) => productItem._id !== action.payload
-        )
-      };
+
+      
+      case DELETE_PRODUCT:
+        return {
+          ...state,
+          products: state.products.filter(
+            (productItem) => productItem.id_product !== action.payload
+          )
+        };
 
     // * NON CRUD OPS
     case SET_CURRENT:

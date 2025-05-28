@@ -1,12 +1,10 @@
-const product = require("../models/products.model"); 
+const product = require("../models/products.model");
 
 const getAllProducts = async (req, res) => {
-  let products;
   try {
-    products = await product.getAllProducts();
-    res.status(200).json(products); 
+    const products = await product.getAllProducts();
+    res.status(200).json(products);
   } catch (error) {
-    
     res.status(500).json({ error: "Error en la BBDD" });
   }
 };
@@ -27,24 +25,19 @@ const getCompany = async (req, res) => {
 };
 
 const deleteProduct = async (req, res) => {
-  const deleteProduct = req.body; // {title}
-  if ("title" in deleteProduct) {
-    try {
-      const response = await product.deleteProduct(deleteProduct);
-      res.status(200).json({
-        items_updated: response,
-        data: deleteProduct,
-      });
-    } catch (error) {
-      res.status(500).json({ error: "Error en la BBDD" });
-    }
-  } else {
-    res.status(400).json({ error: "Faltan campos en la entrada" });
+  try {
+    const { id_product } = req.params;
+
+    const result = await product.deleteProduct(id_product); 
+    res.json({ success: true, deleted: result });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al borrar el producto' });
   }
 };
 
 const updateProduct = async (req, res) => {
-  const modifiedProduct = req.body; // {title, company, description, category, price, image_url, old_title}
+  const modifiedProduct = req.body;
   if (
     "title" in modifiedProduct &&
     "company" in modifiedProduct &&
@@ -69,7 +62,7 @@ const updateProduct = async (req, res) => {
 };
 
 const insertProduct = async (req, res) => {
-  const newProduct = req.body; 
+  const newProduct = req.body;
   if (
     "title" in newProduct &&
     "company" in newProduct &&

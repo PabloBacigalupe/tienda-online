@@ -33,20 +33,15 @@ const getProductByTitle = async (entry) => {
   return result;
 };
 
-const deleteProduct = async (entry) => {
-  const { title } = entry;
-  let client, result;
+const deleteProduct = async (id) => {
+  const client = await pool.connect();
   try {
-    client = await pool.connect();
-    const data = await client.query(queries.deleteProduct, [title]);
-    result = data.rowCount;
-  } catch (err) {
-    console.log(err);
-    throw err;
+    const query = 'DELETE FROM products WHERE id_product = $1';
+    const result = await client.query(query, [id]);
+    return result.rowCount; // 1 si se borra, 0 si no
   } finally {
     client.release();
   }
-  return result;
 };
 
 const updateProduct = async (entry) => {

@@ -120,19 +120,20 @@ export const editProduct = async (dispatch, product) => {
 
 // Eliminar un producto
 export const deleteProduct = async (dispatch, id) => {
-  const options = {
-    method: 'DELETE'
-  };
   try {
-    await fetch(`http://localhost:3000/api/products/${id}`, options);
+    await fetch(`http://localhost:3000/api/products/${id}`, {
+      method: 'DELETE'
+    });
+
     dispatch({
       type: DELETE_PRODUCT,
       payload: id
     });
   } catch (err) {
+    console.error(err);
     dispatch({
       type: PRODUCT_ERROR,
-      payload: err.response?.msg || err.message
+      payload: err.message
     });
   }
 };

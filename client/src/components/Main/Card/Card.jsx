@@ -1,8 +1,16 @@
 import React from 'react';
 import ProductModal from '../ProductModal';
+import { toast } from 'react-toastify';
+import { deleteProduct, useProducts } from '../../context/product/ProductsState';
 
 const Card = ({ product }) => {
-  const { title, company, description, category, price, image_url } = product;
+  const productDispatch = useProducts()[1];
+  const { id_product, title, company, description, category, price, image_url } = product;
+
+  const onDelete = () => {
+    toast.error('Producto eliminado');
+    deleteProduct(productDispatch, id_product);
+  };
 
   return (
     <div className="product-card">
@@ -15,7 +23,11 @@ const Card = ({ product }) => {
         <p className="description">{description.slice(0, 80)}...</p>
         <p className="category">{category}</p>
         <p className="price">{price}$</p>
-        <ProductModal productItem={product} />
+
+        <div className="actions">
+          <ProductModal productItem={product} />
+          <button className="delete-btn" onClick={onDelete}>Eliminar</button>
+        </div>
       </div>
     </div>
   );
