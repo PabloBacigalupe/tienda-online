@@ -43,12 +43,15 @@ const ProductForm = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (product !== initialProduct) {
-      addProduct(productDispatch, product).then(() =>
-        setProduct(initialProduct)
-      );
-    }
-    toast.success('Product Added');
+    addProduct(productDispatch, product)
+      .then(() => {
+        toast.success('Producto añadido con éxito');
+        setProduct(initialProduct);
+      })
+      .catch((err) => {
+        toast.error('No se pudo añadir el producto');
+        console.error(err);
+      });
   };
 
   return (
