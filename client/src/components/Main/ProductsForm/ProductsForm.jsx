@@ -6,6 +6,7 @@ import {
   clearCurrent,
   useProducts
 } from '../../context/product/ProductsState';
+import '../ProductsForm/ProductsForm.css';
 
 const initialProduct = {
   id: '',
@@ -56,61 +57,59 @@ const ProductForm = () => {
 
   return (
     <>
-      <form
-        onSubmit={onSubmit}
-        className='flex flex-col items-center w-screen'>
-        <h2 className='text-primary m-2'>
-          {/* {current ? 'Edit Product' : 'Add Product'} */}
-        </h2>
-        <input
-          className='p-2 m-2'
-          type='text'
-          placeholder='Title'
-          name='title'
-          value={title}
-          onChange={onChange}
-        />
-        <input
-          className='p-2 m-2'
-          type='text'
-          placeholder='Company'
-          name='company'
-          value={company}
-          onChange={onChange}
-        />
-        <textarea
-          className='p-2 m-2'
-          placeholder='Description'
-          name='description'
-          value={description}
-          onChange={onChange}
-        />
-        <input
-          className='p-2 m-2'
-          type='text'
-          placeholder='Category'
-          name='category'
-          value={category}
-          onChange={onChange}
-        />
-        <input
-          className='p-2 m-2'
-          type='number'
-          placeholder='Price'
-          name='price'
-          value={price}
-          onChange={onChange}
-        />
-        <input
-          className='p-2 m-2'
-          type='text'
-          placeholder='Image URL'
-          name='image_url'
-          value={image_url}
-          onChange={onChange}
-        />
-        <button className='btn btn-xs btn-accent m-2 sm:btn-md'>Submit</button>
-      </form>
+        <form onSubmit={onSubmit}>
+            <h2 className="form-title">Añadir producto</h2>
+
+            <input
+              className="form-input"
+              type="text"
+              placeholder="Title"
+              name="title"
+              value={title}
+              onChange={onChange}
+            />
+            <input
+              className="form-input"
+              type="text"
+              placeholder="Company"
+              name="company"
+              value={company}
+              onChange={onChange}
+            />
+            <textarea
+              className="form-textarea"
+              placeholder="Description"
+              name="description"
+              value={description}
+              onChange={onChange}
+            />
+            <input
+              className="form-input"
+              type="text"
+              placeholder="Category"
+              name="category"
+              value={category}
+              onChange={onChange}
+            />
+            <input
+              className="form-input"
+              type="number"
+              placeholder="Price"
+              name="price"
+              value={price}
+              onChange={onChange}
+            />
+            <input
+              className="form-input"
+              type="text"
+              placeholder="Image URL"
+              name="image_url"
+              value={image_url}
+              onChange={onChange}
+            />
+
+            <button className="form-button">Submit</button>
+        </form>
     </>
   );
 };
